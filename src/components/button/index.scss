@@ -1,0 +1,47 @@
+@import "../../utils/abstracts/mixin";
+
+@include b(Button, button) {
+  width: 168px;
+  height: 42px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 400;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  font-family: "Roboto";
+  font-style: normal;
+  line-height: 21px;
+  &:disabled {
+    cursor: not-allowed;
+  }
+  @include m(primary) {
+    border: 1px solid rgb(0, 120, 212);
+
+    background: #4dbc9c;
+    color: rgb(255, 255, 255);
+
+    :disabled {
+      color: rgb(210, 208, 206);
+    }
+  }
+  @include m(standard) {
+    border: 1px solid rgb(138, 136, 134);
+    background: rgb(255, 255, 255);
+    color: rgb(50, 49, 48);
+    &:hover {
+      background-color: rgb(243, 242, 241);
+      color: rgb(32, 31, 30);
+    }
+    &:active {
+      background-color: rgb(237, 235, 233);
+      color: rgb(32, 31, 30);
+    }
+    &:disabled {
+      color: rgb(161, 159, 157);
+    }
+  }
+}

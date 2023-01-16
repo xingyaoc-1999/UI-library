@@ -1,0 +1,7 @@
+@import "_config";
+@function containsModifier($selector) {
+  @if str-index($selector, $modifierSeparator) {
+    @return true;
+  }
+  @return false;
+}

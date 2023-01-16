@@ -1,0 +1,36 @@
+@import "../../../utils//abstracts/_mixin";
+
+@include b(TextItem, textItem) {
+  @include e(name) {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #afafaf;
+  }
+  @include e(status) {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #afafaf;
+  }
+
+  @include e(presentation) {
+    width: 336px;
+    height: 14px;
+    margin-top: 2px;
+  }
+  @include e(outerWrap) {
+    width: 425px;
+    height: 78px;
+  }
+  @include e(innerWrap) {
+    gap:14px
+    
+  }
+}
