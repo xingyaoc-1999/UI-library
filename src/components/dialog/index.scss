@@ -1,0 +1,8 @@
+@include b(dialog, Dialog) {
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  opacity: 0.7;
+  border-radius: 10px;
+  overflow: hidden;
+}

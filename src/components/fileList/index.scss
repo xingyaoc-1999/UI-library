@@ -1,0 +1,71 @@
+@import "../timeLine/index.scss";
+@include b(fileList, Item) {
+  @include e(name) {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    color: #afafaf;
+  }
+  @include e(status) {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+
+    color: #afafaf;
+  }
+  @include e(info) {
+    width: 33.6rem;
+    height: 2.8rem;
+    row-gap: 1.4rem;
+    grid-template-columns: 4fr 1fr;
+  }
+
+  @include e(content) {
+    height: 7.41rem;
+    // height: 100%;
+  }
+  @include e(fileIcon) {
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+  @include e(proceeding) {
+    grid-column: 2 / span 2;
+  }
+  @include e(layout) {
+    // if there exists gap attribute,something unexpected would happen.
+    flex-basis: 7.41rem;
+    border: 1px solid #e4e6ee;
+  }
+}
+
+@include b(fileList, FileList) {
+  @include e(layout) {
+    width: 42.5rem;
+    height: 35.5rem;
+    margin-top: 3rem;
+    gap: 1.6rem;
+    overflow: overlay;
+    &::-webkit-scrollbar {
+      width: 0.7rem;
+
+      border-radius: 2px;
+    }
+    &::-webkit-scrollbar-track {
+      background: rgb(239, 239, 239);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #bfbfbf;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #333;
+    }
+    &::-webkit-scrollbar-corner {
+      background: #179a16;
+    }
+  }
+}

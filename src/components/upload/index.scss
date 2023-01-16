@@ -1,0 +1,72 @@
+// @import "../../utils/abstracts/_mixin";
+@import "../fileList/index.scss";
+$colorPrimary: #4dbc9c;
+@include b(upload, Upload) {
+  @include e(dragEnter) {
+    outline: 4px solid slateblue;
+  }
+  @include e(quote) {
+    gap: 1rem;
+    padding: 2.8rem 0px 0px 2.8rem;
+  }
+  @include e(over) {
+    color: red;
+    outline: 4px solid slateblue;
+    & svg {
+      pointer-events: none;
+    }
+  }
+  @include e(iconFont) {
+    width: 6rem;
+    height: 6rem;
+
+  }
+
+  @include e(title) {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 3.5rem;
+    color: $colorPrimary;
+  }
+  @include e(description) {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.7rem;
+    line-height: 2.1rem;
+    color: #a2a2a2;
+  }
+  @include e(operation-container) {
+    width: 43.8rem;
+    height: 38.3rem;
+    margin: 0 0 2.8rem 2.8rem;
+
+    border: 1px dashed #4dbc9c;
+    border-radius: 5px;
+  }
+  @include e(operation) {
+    width: 19.2rem;
+    height: 18.6rem;
+  }
+
+  @include e(operation__description) {
+    color: $colorPrimary;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+  }
+
+  @include e(subtitle) {
+    width: 10rem;
+    height: 2.1rem;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 2.1rem;
+  }
+}

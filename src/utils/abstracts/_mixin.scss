@@ -1,0 +1,36 @@
+@import "_config";
+@import "_function";
+
+@mixin b($namespace, $block) {
+  $B: $namespace + "-" + $block !global;
+  .#{$B} {
+    @content;
+  }
+}
+
+@mixin e($element) {
+  $E: $element !global;
+
+  @if containsModifier(#{&}) {
+    @at-root {
+      #{&} .#{$B + $elementSeperator + $element} {
+        @content;
+      }
+    }
+  } @else {
+    @at-root {
+      .#{$B + $elementSeperator + $element} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin m($modifier) {
+  @at-root {
+    #{& + $modifierSeparator + $modifier} {
+      @extend .#{$B};
+      @content;
+    }
+  }
+}

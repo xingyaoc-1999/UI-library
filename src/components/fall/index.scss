@@ -1,0 +1,34 @@
+.main {
+  margin: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-rows: auto;
+  gap: 10px;
+}
+
+.content {
+  display: contents;
+}
+
+.small {
+  border-radius: 50%;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.image {
+  width: 100%;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.text {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 1.2rem;
+}
