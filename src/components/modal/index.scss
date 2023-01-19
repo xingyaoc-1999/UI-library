@@ -1,8 +1,5 @@
 @import "../../utils/abstracts/_mixin";
 
-
-
-$colorPrimary: #4dbc9c;
 @include b(Modal, modal) {
   left: 50%;
   z-index: 1;
@@ -21,61 +18,5 @@ $colorPrimary: #4dbc9c;
     height: 100%;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
-  }
-
-  @include e(quote) {
-    gap: 10px;
-    margin: 28px;
-  }
-
-  @include e(title) {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 35px;
-    color: $colorPrimary;
-  }
-  @include e(description) {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
-    color: #a2a2a2;
-  }
-  @include e(operation-container) {
-    width: 440px;
-    height: 385px;
-
-    border: 1px dashed #4dbc9c;
-    border-radius: 5px;
-  }
-  @include e(operation) {
-    width: 192px;
-    height: 186px;
-  }
-  @include e(fileList) {
-    height: 360px;
-    width: 425px;
-  }
-  @include e(operation__description) {
-    color: $colorPrimary;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
-  }
-
-  @include e(subtitle) {
-    width: 100px;
-    height: 21px;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 21px;
-    margin-left: 25px;
   }
 }

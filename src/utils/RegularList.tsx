@@ -4,6 +4,8 @@ interface RegularListProps<T, P> {
   keyExtractor: (item: T) => React.Key | null | undefined;
   data: Array<T>;
   renderItem: React.FC<P>;
+
+  
 }
 
 function RegularList<T, P>({

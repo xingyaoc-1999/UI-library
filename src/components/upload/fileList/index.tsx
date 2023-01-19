@@ -20,9 +20,11 @@ const FileList: React.FC<FileListProps> = ({
         <RegularList
           keyExtractor={(item: UploadFile) => item.uid}
           data={items}
-          renderItem={(item: UploadFile) => {
+          renderItem={({ item }) => {
             return (
               <TextItem
+                contentClassName="flex justify-around"
+                className=" TextItem-textItem__outerWrap"
                 item={item}
                 onRemove={() => onRemove(item)}
               />

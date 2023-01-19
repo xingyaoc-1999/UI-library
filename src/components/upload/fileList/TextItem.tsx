@@ -4,19 +4,18 @@ import { UploadFile, UploadStatus } from "../dtos";
 import img from "../../../assets/images/image.jpg";
 
 export interface TextItemProps {
-  item?: UploadFile;
+  item: UploadFile;
   className?: string;
   contentClassName?: string;
   onRemove?: () => void;
 }
 
 const TextItem: React.FC<TextItemProps> = ({
-  item,
+  item: { name, status, percent = 0 },
   className,
   onRemove,
   contentClassName,
 }) => {
-  // const { status, name, percent = 0 } = item;
   // const uploading = useMemo(() => status === UploadStatus.UPLOADING, [status]);
   // const uploadFailed = useMemo(() => status === UploadStatus.ERROR, [status]);
   // const uploadSuccess = useMemo(() => status === UploadStatus.DONE, [status]);
@@ -37,12 +36,12 @@ const TextItem: React.FC<TextItemProps> = ({
 
       <div className="flex flex-col TextItem-textItem__innerWrap">
         <div className="flex justify-between TextItem-textItem__presentation">
-          <div className="TextItem-textItem__name">PDF</div>
+          <div className="TextItem-textItem__name">{name}</div>
           <div
             className="TextItem-textItem__status"
             onClick={onRemove}
           >
-            success
+            {status}
           </div>
         </div>
         <div className="TextItem-textItem__proceeding">laoding</div>

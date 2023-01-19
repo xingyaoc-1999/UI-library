@@ -1,10 +1,12 @@
-import RoughWrap from "../roughWrap";
-import FileList from "./fileList/FileList";
+import FileList from "./fileList";
 import { ResponseData, UploadFile, UploadStatus } from "./dtos";
 
 import { ChangeEvent, useMemo, useRef, useState } from "react";
 
 import axios, { AxiosProgressEvent } from "axios";
+import { Button } from "../button";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { IconContext } from "react-icons/lib";
 
 export interface UploadProps {
   url: string;
@@ -24,7 +26,6 @@ export const Upload: React.FC<UploadProps> = ({
   url,
   accept,
   multiple,
-
   listType,
   beforeUpload,
   maxCount = 6,
@@ -37,7 +38,7 @@ export const Upload: React.FC<UploadProps> = ({
 
   useMemo(() => {
     fileList.forEach((file) => {
-      if (!file.uid) file.uid = Date.now().toString(16);
+      if (!file.uid) file.uid = crypto.randomUUID();
       if (!file.status) file.status = UploadStatus.DONE;
     });
   }, [fileList]);
@@ -73,7 +74,7 @@ export const Upload: React.FC<UploadProps> = ({
     }
 
     const newTasks: UploadFile[] = files.map((file, index) => ({
-      uid: (Date.now() - index).toString(12),
+      uid: crypto.randomUUID(),
       status: UploadStatus.UPLOADING,
       name: file.name,
       rawFile: file,
@@ -144,11 +145,43 @@ export const Upload: React.FC<UploadProps> = ({
     return true;
   };
   return (
-    <RoughWrap
-      customElement="div"
-      onClick={onOpenResource}
-      style={{ width: "500px", height: "500px" }}
-    >
+    <>
+      <div className="Upload-upload__quote flex flex-col">
+        <div className="Upload-upload__title">Upload Files</div>
+        <div className="Upload-upload__description">
+          Upload documents you want to share with your
+        </div>
+      </div>
+      <div className="flex justify-center items-center grid-row-2 Upload-upload__operation-container place-self-center flex-row">
+        <div className="flex Upload-upload__operation flex-col justify-between items-center">
+          <IconContext.Provider
+            value={{ className: "Upload-upload__uploadIcon" }}
+          >
+            <AiOutlineCloudUpload />
+          </IconContext.Provider>
+
+          <div className="Upload-upload__operation__description">
+            Drag and Drop here
+          </div>
+          <div className="Upload-upload__operation__description">-OR-</div>
+          <Button
+            type="primary"
+            onClick={onOpenResource}
+          >
+            Browser Files
+          </Button>
+        </div>
+      </div>
+      <div className="Upload-upload__subtitle grid-col-2 grid-row-2">
+        Upload Files
+      </div>
+      <div className="flex flex-col justify-between grid-row-2 grid-col-2 Modal-modal__fileList place-self-center justify-between">
+        <FileList
+          onRemove={onRemove}
+          items={internalFileList}
+          type={listType}
+        />
+      </div>
       <input
         ref={inputRef}
         type="file"
@@ -157,12 +190,6 @@ export const Upload: React.FC<UploadProps> = ({
         multiple={multiple}
         hidden
       />
-
-      <FileList
-        onRemove={onRemove}
-        items={internalFileList}
-        type={listType}
-      />
-    </RoughWrap>
+    </>
   );
 };
