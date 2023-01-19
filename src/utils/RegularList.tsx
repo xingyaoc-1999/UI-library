@@ -1,18 +1,16 @@
 import React from "react";
 
-interface RegularListProps<T, P> {
+interface RegularListProps<T> {
   keyExtractor: (item: T) => React.Key | null | undefined;
   data: Array<T>;
-  renderItem: React.FC<P>;
-
-  
+  renderItem: React.FC<{ item: T }>;
 }
 
-function RegularList<T, P>({
+function RegularList<T>({
   renderItem: RenderItem,
   data,
   keyExtractor,
-}: RegularListProps<T, P extends any ? any : any>) {
+}: RegularListProps<T>) {
   return (
     <>
       {data.map((item) => {
