@@ -149,7 +149,7 @@ export const Upload: React.FC<UploadProps> = ({
       <div className="Upload-upload__quote flex flex-col">
         <div className="Upload-upload__title">Upload Files</div>
         <div className="Upload-upload__description">
-          Upload documents you want to share with your
+          Upload documents you want to share with your team
         </div>
       </div>
       <div className="flex justify-center items-center grid-row-2 Upload-upload__operation-container place-self-center flex-row">
@@ -175,13 +175,13 @@ export const Upload: React.FC<UploadProps> = ({
       <div className="Upload-upload__subtitle grid-col-2 grid-row-2">
         Upload Files
       </div>
-      <div className="flex flex-col justify-between grid-row-2 grid-col-2 Modal-modal__fileList place-self-center justify-between">
-        <FileList
-          onRemove={onRemove}
-          items={internalFileList}
-          type={listType}
-        />
-      </div>
+
+      <FileList
+        onRemove={onRemove}
+        items={internalFileList}
+        type={listType}
+      />
+
       <input
         ref={inputRef}
         type="file"

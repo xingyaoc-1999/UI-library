@@ -3,7 +3,7 @@
 @import "./components/upload/fileList/index.scss";
 @import "./components/modal/index.scss";
 html {
-  font-size: 62.5%;
+  font-size: calc(100vw / 128);
 }
 *,
 h1,
@@ -185,18 +185,7 @@ body {
   grid-column: -1;
 }
 
-.col-span-2 {
-  grid-column: span 2 / span 2;
-}
-.col-span-3 {
-  grid-column: span 3 / span 3;
-}
-.col-span-4 {
-  grid-column: span 4 / span 4;
-}
-.col-span-full {
-  grid-column: 1 / -1;
-}
+
 
 .grid-row-1 {
   grid-row: 1;
@@ -214,18 +203,7 @@ body {
   grid-row: -1;
 }
 
-.row-span-2 {
-  grid-row: span 2;
-}
-.row-span-3 {
-  grid-row: span 3;
-}
-.row-span-4 {
-  grid-row: span 4;
-}
-.row-span-full {
-  grid-row: 1 / -1;
-}
+
 
 .grid-flow-row {
   grid-auto-flow: row;

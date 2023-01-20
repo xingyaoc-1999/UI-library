@@ -5,8 +5,8 @@
     font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 14px;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
 
     color: #afafaf;
   }
@@ -14,23 +14,40 @@
     font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 14px;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    padding: 1.2rem;
 
     color: #afafaf;
   }
+  @include e(info) {
+    gap: 1.4rem;
+  }
 
-  @include e(presentation) {
-    width: 336px;
-    height: 14px;
-    margin-top: 2px;
+  @include e(content) {
+    height: 7.675rem;
+    grid-template-columns: 1fr 4fr 16ch;
   }
-  @include e(outerWrap) {
-    width: 425px;
-    height: 78px;
+  @include e(fileIcon) {
+    width: 4.2rem;
+    height: 4.2rem;
   }
-  @include e(innerWrap) {
-    gap:14px
-    
+  @include e(proceeding) {
+    grid-column: 2 / span 2;
+  }
+  @include e(layout) {
+    // if there exists gap attribute,something unexpected would happen.
+    // flex-basis: 7.675rem;
+    border: 1px solid #e4e6ee;
+  }
+}
+
+@include b(FileList, fileList) {
+  @include e(layout) {
+    width: 42.5rem;
+    height: 35.5rem;
+    margin-top: 3rem;
+    gap: 1.6rem;
+    overflow: auto;
   }
 }

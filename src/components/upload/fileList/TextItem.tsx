@@ -1,7 +1,8 @@
 import { memo, useMemo } from "react";
+import { IconContext } from "react-icons/lib";
 import RoughWrap from "../../roughWrap";
 import { UploadFile, UploadStatus } from "../dtos";
-import img from "../../../assets/images/image.jpg";
+import { FileIcon } from "./icon";
 
 export interface TextItemProps {
   item: UploadFile;
@@ -11,7 +12,7 @@ export interface TextItemProps {
 }
 
 const TextItem: React.FC<TextItemProps> = ({
-  item: { name, status, percent = 0 },
+  item: { name, status, percent = 0, rawFile },
   className,
   onRemove,
   contentClassName,
@@ -26,26 +27,27 @@ const TextItem: React.FC<TextItemProps> = ({
       contentClassName={contentClassName}
       className={className}
     >
-      <div>
-        <img
-          style={{ width: "28px", height: "41px" }}
-          src={img}
-          alt=""
-        />
-      </div>
+      <IconContext.Provider
+        value={{
+          className: "TextItem-textItem__fileIcon place-self-center",
+        }}
+      >
+        <FileIcon rawFile={rawFile} />
+      </IconContext.Provider>
 
-      <div className="flex flex-col TextItem-textItem__innerWrap">
-        <div className="flex justify-between TextItem-textItem__presentation">
-          <div className="TextItem-textItem__name">{name}</div>
-          <div
-            className="TextItem-textItem__status"
-            onClick={onRemove}
-          >
-            {status}
-          </div>
+      <div className="flex flex-col TextItem-textItem__info self-center"  >
+        <div className="TextItem-textItem__name ">{name}</div>
+        <div className="TextItem-textItem__proceeding   ">
+          Lorem ipsum, dolor sit amet consecte
         </div>
-        <div className="TextItem-textItem__proceeding">laoding</div>
       </div>
+      <div
+        className="TextItem-textItem__status self-start"
+        onClick={onRemove}
+      >
+        {status}
+      </div>
+   
 
       {/* {uploading && <Progress percent={percent} />} */}
     </RoughWrap>

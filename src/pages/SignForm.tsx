@@ -21,7 +21,6 @@ export const SignForm = () => {
         email: Yup.string().email("Invalid email address").required("Required"),
       })}
       onSubmit={function (parameter: FormikValues): void | Promise<void> {
-        console.log(1);
       }}
     >
       <Input
