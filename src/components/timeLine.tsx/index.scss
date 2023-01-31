@@ -1,0 +1,28 @@
+@include b(timeLine, TimeLine) {
+  @include e(bar) {
+    width: 100%;
+    background-color: #dde6e4;
+    height: 5px;
+
+    &::before {
+      // counter-reset: progress var(--percent);
+      content: " ";
+      height: 5px;
+      width: calc(var(--percent) * 1%);
+
+      background: linear-gradient(green, green),
+        linear-gradient(#2486ff, #2486ff), linear-gradient(orange, orange),
+        linear-gradient(red, red);
+
+      background-size: calc((var(--percent) - 90) * 100%) 100%,
+        calc((var(--percent) - 60) * 100%) 100%,
+        calc((var(--percent) - 30) * 100%) 100%, 100% 100%;
+
+      white-space: nowrap;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      transition-duration: 0.8s;
+    }
+  }
+}

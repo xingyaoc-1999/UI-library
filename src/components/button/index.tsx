@@ -24,8 +24,7 @@ export const Button: React.FC<
           : "Button-button--standard"
       }
       {...restProps}
-    >
-      {children}
-    </RoughWrap>
+      children={children}
+    />
   );
 };

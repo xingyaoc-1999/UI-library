@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, createElement, memo, ReactNode } from "react";
+import { AllHTMLAttributes, createElement, ReactNode } from "react";
 
 interface RoughWrapProps extends AllHTMLAttributes<HTMLElement> {
   children: ReactNode;
@@ -24,4 +24,4 @@ const RoughWrap: React.FC<RoughWrapProps> = ({
   );
 };
 
-export default memo(RoughWrap);
+export default RoughWrap;

@@ -7,8 +7,8 @@ interface Options {
   onChange?: (isHover: boolean) => void;
 }
 
-export const useHover = (target: any, options?: Options) => {
-  const { onEnter, onLeave, onChange } = options || {};
+export const useHover = (target: any, options: Options = {}) => {
+  const { onEnter, onLeave, onChange } = options;
   const [isHover, setHover] = useState<boolean>(false);
   useEventListener(
     "mouseenter",
