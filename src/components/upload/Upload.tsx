@@ -1,10 +1,10 @@
-import FileList from "../fileList";
+import FileList from "../fileList/FileList";
 import { ResponseData, UploadFile, UploadStatus } from "./dtos";
 
 import { ChangeEvent, useMemo, useRef, useState } from "react";
 
 import axios, { AxiosProgressEvent } from "axios";
-import { Button } from "../button";
+import { Button } from "../button/Button";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { IconContext } from "react-icons/lib";
 
@@ -64,7 +64,7 @@ export const Upload: React.FC<UploadProps> = ({
 
     if (!rawFiles) return;
     let files = Array.from(rawFiles);
-
+    console.log(files);
     async function* generateFiles() {
       if (beforeUpload) {
         const shouldUpload = await beforeUpload(files);

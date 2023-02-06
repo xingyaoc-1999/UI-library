@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 
 import { Modal } from "./components/modal";
 
-import { Upload } from "./components/upload";
+import { Upload } from "./components/upload/Upload";
 import { useEventListener } from "./hooks";
 import { readableStream } from "./utils/stream/readableStream";
 
@@ -12,6 +12,8 @@ const POSTS = [
   { id: 1, title: "Post 1" },
   { id: 2, title: "Post 2" },
 ];
+const clone = structuredClone(POSTS);
+console.log(clone);
 function App() {
   const [visible, setVisible] = useState<boolean>(false);
   const queryClient = useQueryClient();

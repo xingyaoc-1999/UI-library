@@ -1,9 +1,9 @@
 import { memo } from "react";
 import { IconContext } from "react-icons/lib";
 
-import { TimeLine } from "../timeLine.tsx";
+import { BasicTimeLine } from "../timeLine.tsx/BasicTimeLine";
 import { UploadFile, UploadStatus } from "../upload/dtos";
-import { FileIcon } from "./icon";
+import { FileIcon } from "./Icon";
 
 export interface TextItemProps {
   item: UploadFile;
@@ -25,16 +25,16 @@ const Item: React.FC<TextItemProps> = ({
   return (
     <div className={className}>
       <div className={contentClassName}>
-        <IconContext.Provider
+        {/* <IconContext.Provider
           value={{
             className: "fileList-Item__fileIcon place-self-center",
           }}
         >
           <FileIcon rawFile={rawFile} />
-        </IconContext.Provider>
+        </IconContext.Provider> */}
         <div className="grid fileList-Item__info ">
           <div className="fileList-Item__name  ">{`${name} (${percent}%)`}</div>
-          <TimeLine percent={percent} />
+          <BasicTimeLine percent={percent} />
           <div
             className="fileList-Item__status grid-col-2 justify-self-end "
             onClick={onRemove}
