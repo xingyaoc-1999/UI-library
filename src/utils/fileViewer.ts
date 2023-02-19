@@ -1,4 +1,4 @@
-import { fileJudgement } from "./fileJudgement";
+import { fileJudgement } from "../components/upload/utils/fileJudgement";
 
 export const fileViewer = async (file: File) => {
   const type = await fileJudgement(file);

@@ -12,7 +12,7 @@ export interface UploadFile {
   status?: string;
   url?: string;
   percent?: number;
-  rawFile?: File;
+  rawFile: File;
 }
 
 export interface ResponseData {

@@ -34,7 +34,7 @@ const Item: React.FC<TextItemProps> = ({
         </IconContext.Provider> */}
         <div className="grid fileList-Item__info ">
           <div className="fileList-Item__name  ">{`${name} (${percent}%)`}</div>
-          <LinearProgressBar percent={percent} />
+          <LinearProgressBar percent={percent}  />
           <div
             className="fileList-Item__status grid-col-2 justify-self-end "
             onClick={onRemove}

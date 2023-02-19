@@ -21,14 +21,7 @@ function App() {
     queryKey: ["post"],
     queryFn: () => wait(1000).then(() => [...POSTS]),
   });
-  useEffect(() => {
-    (async () => {
-      const instance = new ResumableFetch("http://localhost:3000");
-      const res = await instance.read();
 
-      console.log(res.headers["content-length"]);
-    })();
-  }, []);
 
   const newPostMutation = useMutation({
     async mutationFn(title: string) {
@@ -58,7 +51,7 @@ function App() {
         ref={dialogRef}
         contentClassName=" grid dialog-DialogCus__content"
         className="dialog-DialogCus">
-        <Upload url={""} multiple />
+        <Upload url='http://localhost:3001/file' multiple />
       </Dialog>
 
       <button

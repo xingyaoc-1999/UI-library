@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import Instance from "../../https/instance";
+import Instance from "../../https/upload";
 
-export const setProfile = createAsyncThunk("profile/loading", async () => {
-  return await Instance.getServerData("/user/123");
-});
+// export const setProfile = createAsyncThunk("profile/loading", async () => {
+//   return await Instance.getServerData("/user/123");
+// });
 
 const initialState: any = {
   value: [1, 2],
@@ -14,7 +14,7 @@ const counterSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(setProfile.fulfilled, (state, { payload }) => {});
+    // builder.addCase(setProfile.fulfilled, (state, { payload }) => {});
   },
 });
 

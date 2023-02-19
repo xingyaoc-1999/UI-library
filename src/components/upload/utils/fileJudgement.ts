@@ -1,6 +1,3 @@
-
-
-
 export const fileJudgement = async (file: File): Promise<string> => {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -30,3 +27,4 @@ const type: { [index: string]: Function } = {
     }
   },
 };
+

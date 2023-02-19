@@ -3,7 +3,7 @@ import { UploadFile } from "../upload/dtos";
 
 import RegularList from "../../utils/RegularList";
 import Item from "./Item";
-import { fileJudgement } from "../../utils/fileJudgement";
+import { fileJudgement } from "../upload/utils/fileJudgement";
 import React from "react";
 interface FileListProps {
   items: UploadFile[];

@@ -12,24 +12,16 @@ export interface UploadProps {
   url: string;
   accept?: string;
   multiple?: boolean;
-
   className?: string;
   fileList?: UploadFile[];
   maxCount?: number;
-
-  beforeUpload?: (fileList: File[]) => Promise<File[]>;
-  customRequest?: (formData: FormData) => Promise<ResponseData>;
 }
 
 export const Upload: React.FC<UploadProps> = ({
   url,
   accept,
   multiple,
-
-  beforeUpload,
   maxCount = 6,
-
-  customRequest,
   fileList = [],
 }) => {
   const [internalFileList, setInternalFileList] = useState(fileList);
@@ -64,19 +56,16 @@ export const Upload: React.FC<UploadProps> = ({
 
     if (!rawFiles) return;
     let files = Array.from(rawFiles);
-    console.log(files);
 
     async function* generateFiles() {
-      if (beforeUpload) {
-        const shouldUpload = await beforeUpload(files);
-        files = shouldUpload;
-      }
-
       const currentFiles = files.map((v) => ({
         status:
-          v.size < 1 << 10 ? UploadStatus.UPLOADING : UploadStatus.CANCELED,
+          v.size < ((1 << 10) << 10) << 10
+            ? UploadStatus.UPLOADING
+            : UploadStatus.CANCELED,
         uid: crypto.randomUUID(),
-        name: v.size < 1 << 10 ? v.name : "File Size is too large",
+        name:
+          v.size < ((1 << 10) << 10) << 10 ? v.name : "File Size is too large",
         rawFile: v,
       }));
       const count = currentFiles.length + internalFileList.length;
@@ -123,10 +112,12 @@ export const Upload: React.FC<UploadProps> = ({
 
   const post = async (currentTask: UploadFile): Promise<ResponseData> => {
     const formData = new FormData();
-    const { rawFile } = currentTask;
-    if (!rawFile) throw new Error("no rawFile");
 
-    if (customRequest) return await customRequest(formData);
+    console.log(currentTask);
+    const { rawFile, name } = currentTask;
+    formData.set("file", rawFile, name);
+
+    if (!rawFile) throw new Error("no rawFile");
     const res = await axios.post(url, formData, {
       onUploadProgress: (e: AxiosProgressEvent) => {
         updateStatus(currentTask, {
@@ -174,9 +165,11 @@ export const Upload: React.FC<UploadProps> = ({
             onDrop={async (e) => {
               e.preventDefault();
               // await handleUploadTasks(Array.from(e.dataTransfer.files));
-            }}>
+            }}
+          >
             <IconContext.Provider
-              value={{ className: "upload-Upload__iconFont" }}>
+              value={{ className: "upload-Upload__iconFont" }}
+            >
               <AiOutlineCloudUpload />
             </IconContext.Provider>
           </div>
