@@ -1,19 +1,20 @@
 import FileList from "../fileList";
-import { ResponseData, UploadFile, UploadStatus } from "./dtos";
+import { UploadFile, UploadStatus } from "./dtos";
 
-import { ChangeEvent, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 import axios, { AxiosProgressEvent } from "axios";
 import { Button } from "../button";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { IconContext } from "react-icons/lib";
+import { changeBuffer, getUploadedBytes } from "./utils";
 
 export interface UploadProps {
   url: string;
   accept?: string;
   multiple?: boolean;
   className?: string;
-  fileList?: UploadFile[];
+
   maxCount?: number;
 }
 
@@ -22,18 +23,11 @@ export const Upload: React.FC<UploadProps> = ({
   accept,
   multiple,
   maxCount = 6,
-  fileList = [],
 }) => {
-  const [internalFileList, setInternalFileList] = useState(fileList);
+  const [internalFileList, setInternalFileList] = useState<UploadFile[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const uploadRef = useRef<HTMLDivElement>(null);
   const [over, setOver] = useState(false);
-  useMemo(() => {
-    fileList.forEach((file) => {
-      if (!file.uid) file.uid = crypto.randomUUID();
-      if (!file.status) file.status = UploadStatus.DONE;
-    });
-  }, [fileList]);
 
   const onRemove = (file: UploadFile) => {
     const removedFileList = internalFileList.filter(
@@ -56,77 +50,90 @@ export const Upload: React.FC<UploadProps> = ({
 
     if (!rawFiles) return;
     let files = Array.from(rawFiles);
-
-    async function* generateFiles() {
-      const currentFiles = files.map((v) => ({
-        status:
-          v.size < ((1 << 10) << 10) << 10
-            ? UploadStatus.UPLOADING
-            : UploadStatus.CANCELED,
-        uid: crypto.randomUUID(),
-        name:
-          v.size < ((1 << 10) << 10) << 10 ? v.name : "File Size is too large",
-        rawFile: v,
-      }));
-      const count = currentFiles.length + internalFileList.length;
-      if (count < maxCount) {
-        setInternalFileList((preTask) => [...preTask, ...currentFiles]);
-        yield* currentFiles;
-      }
-    }
-    const uploadFile: UploadFile[] = [];
-    for await (const i of generateFiles()) {
-      uploadFile.push(i);
-    }
-
-    async function uplaod() {
-      await Promise.allSettled(
-        uploadFile.map(async (currentTask) => {
-          try {
-            if (currentTask.status === UploadStatus.CANCELED) {
-              return;
-            }
-            const result = await post(currentTask);
-
-            updateStatus(currentTask, {
-              status: UploadStatus.DONE,
-              url: result.url,
-            });
-            console.log(internalFileList);
-          } catch (error) {
-            updateStatus(currentTask, {
-              status: UploadStatus.ERROR,
-              url: "",
-            });
-
-            throw error;
-          }
-        })
-      ).catch((error) => {
-        console.log(error);
-      });
-    }
-    uplaod();
+    const uploadFiles = await generateFiles(files);
+    upload(uploadFiles!);
     e.target.value = "";
   };
+  const generateFiles = async (files: File[]) => {
+    const count = files.length + internalFileList.length;
+    if (count > maxCount) {
+      return;
+    }
 
-  const post = async (currentTask: UploadFile): Promise<ResponseData> => {
-    const formData = new FormData();
-
-    console.log(currentTask);
-    const { rawFile, name } = currentTask;
-    formData.set("file", rawFile, name);
-
-    if (!rawFile) throw new Error("no rawFile");
-    const res = await axios.post(url, formData, {
-      onUploadProgress: (e: AxiosProgressEvent) => {
-        updateStatus(currentTask, {
+    const currentFiles = await Promise.all(
+      files.map(async (v) => {
+        const { HASH, fileName } = await changeBuffer(v);
+        return {
           status: UploadStatus.UPLOADING,
-          percent: Math.round((e.loaded * 100) / e.total!),
-        });
-      },
+          uid: HASH,
+          name: fileName,
+          rawFile: v,
+        };
+      })
+    );
+
+    setInternalFileList((preTask) => [...preTask, ...currentFiles]);
+    return currentFiles;
+  };
+
+  const upload = async (uploadFile: UploadFile[]) => {
+    await Promise.all(
+      uploadFile.map(async (currentTask) => {
+        try {
+          if (currentTask.status === UploadStatus.CANCELED) {
+            return;
+          }
+          const result = await post(currentTask);
+          console.log(result);
+
+          updateStatus(currentTask, {
+            status: UploadStatus.DONE,
+            url: result.url,
+          });
+        } catch (error) {
+          updateStatus(currentTask, {
+            status: UploadStatus.ERROR,
+            url: "",
+          });
+
+          console.log(error);
+        }
+      })
+    ).catch((error) => {
+      console.log(error);
     });
-    return res.data;
+  };
+
+  const post = async (currentTask: UploadFile): Promise<any> => {
+    const { rawFile, name } = currentTask;
+
+    const startByte = await getUploadedBytes(name);
+
+    const readableStream = rawFile.slice(startByte).stream();
+    const stream = readableStream.getReader();
+
+    while (true) {
+      let { done, value } = await stream.read();
+      if (done) {
+        console.log("all blob processed.");
+        break;
+      }
+      const res = await axios.post(url, value, {
+        onUploadProgress: (e: AxiosProgressEvent) => {
+          updateStatus(currentTask, {
+            status: UploadStatus.UPLOADING,
+            percent: Math.round(((e.loaded + startByte) * 100) / e.total!),
+          });
+        },
+        headers: {
+          "x-file-id": name,
+          "x-start-byte": startByte,
+          "x-file-size": rawFile.size,
+          "content-type": "application / octet - stream",
+        },
+      });
+      return res.data;
+    }
   };
 
   const updateStatus = (
@@ -136,10 +143,8 @@ export const Upload: React.FC<UploadProps> = ({
     setInternalFileList((pre) => {
       return pre.map((task) => {
         if (task.uid !== currentTask.uid) return task;
-        return {
-          ...task,
-          ...info,
-        };
+        const newTask = { ...task, ...info };
+        return newTask;
       });
     });
   };

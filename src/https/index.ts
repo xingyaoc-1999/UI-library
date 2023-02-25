@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const upload = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: "http://localhost:3001",
 });
 upload.interceptors.response.use(
   (response) => Promise.resolve(response),

@@ -7,15 +7,10 @@ export const enum UploadStatus {
 }
 
 export interface UploadFile {
-  name?: string;
-  uid?: string;
+  name: string;
+  uid: string;
   status?: string;
   url?: string;
   percent?: number;
   rawFile: File;
-}
-
-export interface ResponseData {
-  url: string;
-  [key: string]: any;
 }
