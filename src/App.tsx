@@ -17,26 +17,26 @@ webWoker();
 
 function App() {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const queryClient = useQueryClient();
-  const postQuery = useQuery({
-    queryKey: ["post"],
-    queryFn: () => wait(1000).then(() => [...POSTS]),
-  });
+  // const queryClient = useQueryClient();
+  // const postQuery = useQuery({
+  //   queryKey: ["post"],
+  //   queryFn: () => wait(1000).then(() => [...POSTS]),
+  // });
 
-  const newPostMutation = useMutation({
-    async mutationFn(title: string) {
-      await wait(100);
-      return POSTS.push({ id: Number(crypto.randomUUID()), title });
-    },
-    onSuccess() {
-      queryClient.invalidateQueries(["post"]);
-    },
-  });
+  // const newPostMutation = useMutation({
+  //   async mutationFn(title: string) {
+  //     await wait(100);
+  //     return POSTS.push({ id: Number(crypto.randomUUID()), title });
+  //   },
+  //   onSuccess() {
+  //     queryClient.invalidateQueries(["post"]);
+  //   },
+  // });
 
-  if (postQuery.isLoading) return <h1> Lodaing...</h1>;
-  if (postQuery.isError) {
-    return <pre>{JSON.stringify(postQuery.error)}</pre>;
-  }
+  // if (postQuery.isLoading) return <h1> Lodaing...</h1>;
+  // if (postQuery.isError) {
+  //   return <pre>{JSON.stringify(postQuery.error)}</pre>;
+  // }
 
   return (
     <>
@@ -47,11 +47,7 @@ function App() {
       </div>
       <button onClick={() => newPostMutation.mutate("new Post")}></button> */}
 
-      <Dialog
-        ref={dialogRef}
-        contentClassName=" grid dialog-DialogCus__content"
-        className="dialog-DialogCus"
-      >
+      <Dialog ref={dialogRef}>
         <Upload url="http://localhost:3001/upload" multiple />
       </Dialog>
 

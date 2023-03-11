@@ -1,3 +1,5 @@
+import { CancelTokenSource } from "axios";
+
 export const enum UploadStatus {
   UPLOADING = "uploading",
   DONE = "done",
@@ -13,4 +15,5 @@ export interface UploadFile {
   url?: string;
   percent?: number;
   rawFile: File;
+  cancelTokenSource: CancelTokenSource;
 }
