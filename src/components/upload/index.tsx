@@ -112,10 +112,11 @@ export const Upload: React.FC<UploadProps> = ({
     const startByte = await getUploadedBytes(uid);
 
     const chunks = createChunks(rawFile, startByte);
+    console.log(chunks);
 
     async function* dataStream<T>(chunks: Array<T>) {
-      for (let index = 0; index < chunks.length; index++) {
-        const result = await axios.post(url, chunks[index], {
+      for (let chunk of chunks) {
+        const result = await axios.post(url, chunk, {
           cancelToken,
           onUploadProgress: (e: AxiosProgressEvent) => {
             updateStatus(currentTask, {
@@ -124,6 +125,7 @@ export const Upload: React.FC<UploadProps> = ({
             });
           },
           headers: {
+            "Content-Type": "application/octet-stream",
             "x-file-id": uid,
             "x-start-byte": startByte,
             "x-file-size": rawFile.size,
